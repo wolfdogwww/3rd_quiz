@@ -1,6 +1,5 @@
 import json 
 import sqlite3
-import os
 WANGHONG_DB='wanghong.db' #老師如果你有要改資料庫名子的話改這裡
 PASS_JSON='pass.json'
 
