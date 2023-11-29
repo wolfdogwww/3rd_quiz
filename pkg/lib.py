@@ -1,6 +1,9 @@
 import json 
 import sqlite3
 import os
+WANGHONG_DB='wanghong.db' #老師如果你有要改資料庫名子的話改這裡
+PASS_JSON='pass.json'
+
 def read_passjson() -> dict:
     """
     讀取pass.json檔案回傳一個字典
@@ -8,7 +11,7 @@ def read_passjson() -> dict:
     Returns:
         dict: 包含json的檔案(字典的格式)
     """
-    with open('pass.json', 'r', encoding='utf-8') as file:
+    with open(PASS_JSON, 'r', encoding='utf-8') as file:
         return json.load(file)
     
 def display_menu():
@@ -37,7 +40,7 @@ def create_database():
         None: 這個函式沒有返回值。
     """
     
-    conn = sqlite3.connect('wanghong.db')
+    conn = sqlite3.connect(WANGHONG_DB)
     cursor = conn.cursor()
     create_table_query = '''
     CREATE TABLE IF NOT EXISTS members (
@@ -60,7 +63,7 @@ def insert_database():
         None: 這個函式沒有返回值。
     """
     
-    conn = sqlite3.connect('wanghong.db')
+    conn = sqlite3.connect(WANGHONG_DB)
     cursor = conn.cursor()
     
     with open('members.txt', 'r',encoding='utf-8') as file:
@@ -79,7 +82,7 @@ def insert_database():
     conn.commit()
     conn.close()
         
-def print_wanghong():
+def print_wanghong() -> None:
     """
     輸出'wanghong.db'的資料
     
@@ -87,7 +90,7 @@ def print_wanghong():
         None: 這個函式沒有返回值。
     """
     
-    conn = sqlite3.connect('wanghong.db')
+    conn = sqlite3.connect(WANGHONG_DB)
     cursor = conn.cursor()
     cursor.execute("SELECT mname, msex, mphone FROM members")
     rows = cursor.fetchall()
@@ -108,7 +111,7 @@ def add_member() -> None:
     """
     新增member。
     """
-    conn = sqlite3.connect('wanghong.db')
+    conn = sqlite3.connect(WANGHONG_DB)
     cursor = conn.cursor()
     name = input("請輸入姓名: ")
     sex = input("請輸入性別: ")
@@ -121,7 +124,7 @@ def change_member() -> None:
     """
     修改member資料。
     """
-    conn = sqlite3.connect('wanghong.db')
+    conn = sqlite3.connect(WANGHONG_DB)
     cursor = conn.cursor()
     name = input("請輸入想修改記錄的姓名: ")
     if(name == ''):
@@ -157,7 +160,7 @@ def search_phone() -> None:
     """
     查詢指定手機號碼的會員資料。
     """
-    conn = sqlite3.connect('wanghong.db')
+    conn = sqlite3.connect(WANGHONG_DB)
     cursor = conn.cursor()
     phone = input("請輸入想查詢記錄的手機: ")
     
@@ -177,7 +180,7 @@ def del_all() -> None:
     """
     刪除所有會員資料。
     """
-    conn = sqlite3.connect('wanghong.db')
+    conn = sqlite3.connect(WANGHONG_DB)
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM members")
     result = cursor.fetchone()
